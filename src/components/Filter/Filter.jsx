@@ -22,7 +22,7 @@ function Filter({ filter, handleFilterChange }) {
 
 Filter.propTypes = {
   filter: string.isRequired,
-  changeFilter: func.isRequired,
+  handleFilterChange: func.isRequired,
 };
 
 const mapStateToProps = state => ({
