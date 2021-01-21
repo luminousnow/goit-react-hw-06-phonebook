@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import s from './ContactForm.module.css';
+import { connect } from 'react-redux';
 import { func } from 'prop-types';
+import { createContact } from '../../redux/contacts/contacts-actions';
+import s from './ContactForm.module.css';
 
-function ContactForm({ getContactData }) {
+function ContactForm({ createContact }) {
   // === useState hook === //
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
@@ -30,7 +32,7 @@ function ContactForm({ getContactData }) {
   const onSubmitPress = e => {
     e.preventDefault();
 
-    getContactData(name, number);
+    createContact(name, number);
 
     resetFormField();
   };
@@ -79,7 +81,11 @@ function ContactForm({ getContactData }) {
 }
 
 ContactForm.propTypes = {
-  getContactData: func.isRequired,
+  createContact: func.isRequired,
 };
 
-export default ContactForm;
+const mapDispatchToProps = dispatch => ({
+  createContact: (name, number) => dispatch(createContact(name, number)),
+});
+
+export default connect(null, mapDispatchToProps)(ContactForm);
