@@ -2,9 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { string, func } from 'prop-types';
 import s from './Filter.module.css';
-import { handleFilterChange } from '../../redux/contacts/contacts-actions';
+import { filterChange } from '../../redux/contacts/contacts-actions';
 
-function Filter({ filter, handleFilterChange }) {
+function Filter({ filter, filterChange }) {
   return (
     <label className={s.label}>
       <span>find contact by name</span>
@@ -13,7 +13,7 @@ function Filter({ filter, handleFilterChange }) {
         name="filter"
         id="filter"
         value={filter}
-        onChange={handleFilterChange}
+        onChange={filterChange}
         className={s.input}
       />
     </label>
@@ -22,7 +22,7 @@ function Filter({ filter, handleFilterChange }) {
 
 Filter.propTypes = {
   filter: string.isRequired,
-  handleFilterChange: func.isRequired,
+  filterChange: func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -30,8 +30,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  handleFilterChange: evt =>
-    dispatch(handleFilterChange(evt.currentTarget.value)),
+  filterChange: evt => dispatch(filterChange(evt.currentTarget.value)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Filter);

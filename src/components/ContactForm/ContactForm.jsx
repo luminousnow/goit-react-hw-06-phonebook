@@ -10,8 +10,8 @@ function ContactForm({ createContact }) {
   const [number, setNumber] = useState('');
 
   // === пише значення в useState === //
-  const handleImputChange = e => {
-    const { name, value } = e.currentTarget;
+  const handleImputChange = evt => {
+    const { name, value } = evt.currentTarget;
 
     // записує відповідне значення у відповідний useState
     switch (name) {
@@ -29,8 +29,8 @@ function ContactForm({ createContact }) {
   };
 
   // надсилає дані у Арр при Submit
-  const onSubmitPress = e => {
-    e.preventDefault();
+  const onSubmitPress = evt => {
+    evt.preventDefault();
 
     createContact(name, number);
 
