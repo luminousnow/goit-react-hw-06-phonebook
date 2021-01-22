@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
-import { CREATE, DELETE, FILTER_CHANGE } from './contacts-action-types';
+import { createContact, deleteContact, filterChange } from './contacts-actions';
 
 // default Store
 export const initialState = {
@@ -18,7 +18,7 @@ const itemDefault = initialState.contacts.items;
 const filterDefault = initialState.contacts.filter;
 
 const itemReducer = createReducer(itemDefault, {
-  [CREATE]: (state, { payload }) => {
+  [createContact]: (state, { payload }) => {
     // checks the unique Name
     if (
       state.find(
@@ -32,13 +32,13 @@ const itemReducer = createReducer(itemDefault, {
     return [payload, ...state];
   },
 
-  [DELETE]: (state, { payload }) => {
+  [deleteContact]: (state, { payload }) => {
     return state.filter(({ id }) => id !== payload.contactId);
   },
 });
 
 const filterReducer = createReducer(filterDefault, {
-  [FILTER_CHANGE]: ({ payload }) => {
+  [filterChange]: (_, { payload }) => {
     return payload.query;
   },
 });
