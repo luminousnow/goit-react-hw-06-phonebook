@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { func } from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 import { createContact } from '../../redux/contacts/contacts-actions';
 import s from './ContactForm.module.css';
 
-function ContactForm({ createContact }) {
+function ContactForm() {
   // === useState hook === //
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
-  // === пише значення в useState === //
+  // === пише значення в Store === //
   const handleImputChange = evt => {
     const { name, value } = evt.currentTarget;
 
-    // записує відповідне значення у відповідний useState
+    // записує відповідне значення у відповідний State
     switch (name) {
       case 'name':
         setName(value);
@@ -28,12 +27,19 @@ function ContactForm({ createContact }) {
     }
   };
 
-  // надсилає дані у Арр при Submit
+  // on Submit
   const onSubmitPress = evt => {
     evt.preventDefault();
 
-    createContact(name, number);
+    // checks the unique Name
+    if (
+      contactsList.find(item => item.name.toLowerCase() === name.toLowerCase())
+    ) {
+      alert(`${name} is already in contact`);
+      return;
+    }
 
+    dispatch(createContact(name, number));
     resetFormField();
   };
 
@@ -42,6 +48,9 @@ function ContactForm({ createContact }) {
     setName('');
     setNumber('');
   };
+
+  const contactsList = useSelector(state => state.contacts.item);
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -80,12 +89,4 @@ function ContactForm({ createContact }) {
   );
 }
 
-ContactForm.propTypes = {
-  createContact: func.isRequired,
-};
-
-const mapDispatchToProps = dispatch => ({
-  createContact: (name, number) => dispatch(createContact(name, number)),
-});
-
-export default connect(null, mapDispatchToProps)(ContactForm);
+export default ContactForm;

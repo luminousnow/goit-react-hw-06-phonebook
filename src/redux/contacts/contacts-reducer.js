@@ -19,16 +19,6 @@ const filterDefault = initialState.contacts.filter;
 
 const itemReducer = createReducer(itemDefault, {
   [createContact]: (state, { payload }) => {
-    // checks the unique Name
-    if (
-      state.find(
-        ({ name }) => name.toLowerCase() === payload.name.toLowerCase(),
-      )
-    ) {
-      alert(`${payload.name} is already in contact`);
-      return state;
-    }
-
     return [payload, ...state];
   },
 
