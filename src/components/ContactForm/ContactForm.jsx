@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createContact } from '../../redux/contacts/contacts-actions';
+import { getAllContacts } from '../../redux/contacts/contacts-selectors';
 import s from './ContactForm.module.css';
 
 function ContactForm() {
   // === useState hook === //
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+
+  const contactsList = useSelector(getAllContacts);
+  const dispatch = useDispatch();
 
   // === пише значення в Store === //
   const handleImputChange = evt => {
@@ -48,9 +52,6 @@ function ContactForm() {
     setName('');
     setNumber('');
   };
-
-  const contactsList = useSelector(state => state.contacts.item);
-  const dispatch = useDispatch();
 
   return (
     <>
